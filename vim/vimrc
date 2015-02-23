@@ -1,0 +1,125 @@
+" Vim Configuration
+" github/proto 2015 02 23
+" 
+" 1 General Settings
+"  1.1 Terminal
+"  1.2 Mouse
+"  1.3 Search
+"  1.4 Copy & Paste
+"  1.5 Line Numbers
+" 2) Vundle Plugins
+" 3) Plugins Configuration
+" 4) FileType
+"
+
+" 1 General Settings
+
+set nocompatible        " Vim defaults 
+set bs=2                " Allow backspacing over everything in insert mode
+set ai                  " Always set auto-indenting on
+set history=50          " keep 50 lines of command history
+set ruler               " Show the cursor position all the time
+set viminfo='20,\"500   " Keep a .viminfo file.
+set nu                  " Default line numbers
+syntax enable		" syntax
+set enc=utf-8		" default enconding
+
+" 1.1 Terminal
+set background=dark	" Background Dark
+colorscheme Tomorrow-Night
+set t_Co=256 " Force 256 colors
+set term=screen-256color
+let $TERM='screen-256color'
+
+" 1.2 Mouse 
+" OSX specific
+"  Apple Terminal is ok
+"  iTerm2 is ko, so enable mouse support
+if has("mouse")
+ set mouse=a
+endif
+
+" 1.3 Search
+set hlsearch
+nnoremap <CR> :nohlsearch<CR>		" Clear Highlight
+nnoremap <F4> :set invignorecase<CR>	" Toggle [ignore]case on/off
+
+" 1.4 Copy & Paste
+set paste				" preserve indent during paste
+nnoremap <F2> :set invpaste paste?<CR>	" toggle paste/nopaste
+
+" 1.5 Line Numbers
+set number				" set line numbers
+nnoremap <F3> :set invnumber<CR>	" toggle line numbers
+
+
+" 2 Vundle Plugins
+"set nocompatible			" if not already
+filetype off                  		" required
+set rtp+=~/.vim/bundle/Vundle.vim	" where are the bundles?
+call vundle#begin()
+
+" let Vundle manage Vundle, required
+Plugin 'gmarik/Vundle.vim'		" Vundle is required!
+
+" Plugins here
+Plugin 'tpope/vim-fugitive'
+Plugin 'bling/vim-airline'
+Plugin 'elzr/vim-json'
+Plugin 'godlygeek/tabular'
+Plugin 'plasticboy/vim-markdown'
+Plugin 'scrooloose/syntastic'
+Plugin 'davidhalter/jedi-vim'
+
+call vundle#end()            		" required
+filetype plugin indent on    		" required
+
+
+" 3 Plugins Configuration
+
+" vim-airline
+set noshowmode 				" Hide the default mode text
+set laststatus=2               		" enable airline always
+let g:airline_theme='luna'		" theme
+let g:airline_powerline_fonts=1		" if powerline fonts
+let g:airline_symbols = {}		" enable symbols
+let g:airline_left_sep = ''
+let g:airline_right_sep = ''
+let g:airline_symbols.linenr = '␊'
+let g:airline_symbols.linenr = '␤'
+let g:airline_symbols.linenr = '¶'
+let g:airline_symbols.paste = 'ρ'
+let g:airline_symbols.paste = 'Þ'
+let g:airline_symbols.paste = 'ρ'
+let g:airline_symbols.whitespace = 'Ξ'
+let g:airline#extensions#branch#enabled = ''
+let g:airline#extensions#tabline#enabled = 1
+let g:airline#extensions#syntastic#enabled = 1	" syntastic enabled
+let g:airline#extensions#branch#enabled = 1	" fuGITive!
+
+" syntastic
+" reccomended settings
+set statusline+=%#warningmsg#
+set statusline+=%{SyntasticStatuslineFlag()}
+set statusline+=%*
+let g:syntastic_always_populate_loc_list = 1
+let g:syntastic_auto_loc_list = 1
+let g:syntastic_check_on_open = 1
+let g:syntastic_check_on_wq = 0
+" default is Python2
+"let g:syntastic_python_python_exec = '/path/to/python3'
+let g:syntastic_enable_perl_checker = 1
+
+" markdown
+let g:vim_markdown_folding_disabled=1	" disable folding
+
+" vim-jedi
+" WARNING: paste must be off!
+" see https://github.com/davidhalter/jedi-vim/issues/204
+au FileType python set nopaste
+
+" 4 FileType
+" muttrc
+autocmd BufRead,BufNewFile *.muttrc set ft=muttrc
+" markdown
+autocmd BufRead,BufNewFile *.md set ft=markdown
