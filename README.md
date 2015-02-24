@@ -8,4 +8,7 @@ on MacOSX
 
 - tmux
 
+- bin 
+ - battery
+
 
