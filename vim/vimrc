@@ -123,3 +123,7 @@ au FileType python set nopaste
 autocmd BufRead,BufNewFile *.muttrc set ft=muttrc
 " markdown
 autocmd BufRead,BufNewFile *.md set ft=markdown
+" tmux
+augroup filetypedetect                                                                                      
+ au BufNewFile,BufRead .tmux.conf*,tmux.conf* setf tmux                                              
+augroup END 
